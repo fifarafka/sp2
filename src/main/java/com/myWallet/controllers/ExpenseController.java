@@ -10,24 +10,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myWallet.dto.CategoryDto;
-import com.myWallet.services.CategoryService;
+import com.myWallet.dto.ExpenseDto;
+import com.myWallet.services.ExpenseService;
 
-@RequestMapping(value = "/api/category")
+@RequestMapping(value = "/api/expense")
 @RestController
-public class CategoryController {
+public class ExpenseController {
 	
 	@Autowired
-	private CategoryService categoryService;
+	private ExpenseService expenseService;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public List<CategoryDto> count() {
-		return categoryService.getCategoryList();
+	public List<ExpenseDto> getExpenseList() {
+		return expenseService.getListExpense();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void addCategory(@RequestBody @Valid CategoryDto categoryDto) {
-		categoryService.addCategory(categoryDto);
+	public void addExpense(@RequestBody @Valid ExpenseDto expenseDto) {
+		expenseService.addExpense(expenseDto);
 	}
-
 }

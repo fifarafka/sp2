@@ -4,16 +4,19 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Expense extends AbstractEntity {
 	
+	private Category category;
 	
 	private BigDecimal value;
 	
 	private LocalDate dateOfExpense;
-
 	
 	@NotNull
 	public BigDecimal getValue() {
@@ -30,6 +33,14 @@ public class Expense extends AbstractEntity {
 
 	public void setDateOfExpense(LocalDate dateOfExpense) {
 		this.dateOfExpense = dateOfExpense;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 }

@@ -1,14 +1,17 @@
 package com.myWallet.model;
 
+import java.io.Serializable;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class AbstractEntity {
+public class AbstractEntity implements Serializable{
 	
-	private Long Id;
+	private static final long serialVersionUID = -5721749848916682456L;
+	protected Long Id;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
