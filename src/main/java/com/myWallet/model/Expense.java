@@ -9,22 +9,13 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Expense extends AbstractEntity {
 	
-	@NotNull
-	private Category category;
 	
-	@NotNull
 	private BigDecimal value;
 	
 	private LocalDate dateOfExpense;
 
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
+	
+	@NotNull
 	public BigDecimal getValue() {
 		return value;
 	}
