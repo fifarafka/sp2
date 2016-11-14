@@ -30,4 +30,16 @@ public class CategoryServiceImpl implements CategoryService {
 		List<Category> category = (List<Category>) categoryRepository.findAll();
 		return categoryTransformer.transformFromEntity(category);
 	}
+
+	@Override
+	public CategoryDto getCategoty(Long id) {
+		CategoryDto dto = new CategoryDto();
+		categoryTransformer.transformFromDto(categoryRepository.findOne(id), dto);
+		return dto;
+	}
+
+	@Override
+	public void deleteCategory(Long id) {
+		categoryRepository.delete(id);
+	}
 }

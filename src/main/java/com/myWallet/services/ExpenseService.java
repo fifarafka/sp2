@@ -9,5 +9,9 @@ public interface ExpenseService {
 	void addExpense(ExpenseDto expenseDto);
 	
 	List<ExpenseDto> getListExpense();
+	
+	ExpenseDto getExpense(Long id);
+	
+	void deleteExpense(Long id);
 
 }

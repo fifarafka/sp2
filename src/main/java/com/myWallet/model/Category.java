@@ -1,13 +1,14 @@
 package com.myWallet.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
 public class Category extends AbstractEntity {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7430939352333014152L;
 	private String categoryName;
 
 	public String getCategoryName() {

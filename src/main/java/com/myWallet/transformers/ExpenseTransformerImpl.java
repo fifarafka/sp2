@@ -29,6 +29,7 @@ public class ExpenseTransformerImpl implements ExpenseTransformer {
 	public Expense transformFromDto(Expense entity, ExpenseDto dto) {
 		entity.setDateOfExpense(dto.getDateOfExpense());
 		entity.setValue(dto.getValue());
+		entity.setName(dto.getName());
 		entity.setCategory(categoryTransformer.transformFromDto(new Category(), dto.getCategory()));
 		return entity;
 	}
@@ -47,6 +48,7 @@ public class ExpenseTransformerImpl implements ExpenseTransformer {
 		ExpenseDto dto = new ExpenseDto();
 		dto.setDateOfExpense(entity.getDateOfExpense());
 		dto.setValue(entity.getValue());
+		dto.setName(entity.getName());
 		dto.setCategory(categoryTransformer.transformFromEntity(entity.getCategory()));
 		return dto;
 	}

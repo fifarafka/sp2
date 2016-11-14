@@ -29,4 +29,14 @@ public class ExpenseServiceImpl implements ExpenseService {
 		return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAll());
 	}
 
+	@Override
+	public ExpenseDto getExpense(Long id) {
+		return expenseTransformer.transformFromEntity(expenseRepository.findOne(id));
+	}
+
+	@Override
+	public void deleteExpense(Long id) {
+		expenseRepository.delete(id);
+	}
+
 }

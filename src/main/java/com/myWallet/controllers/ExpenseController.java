@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,5 +29,15 @@ public class ExpenseController {
 	@RequestMapping(method = RequestMethod.POST)
 	public void addExpense(@RequestBody @Valid ExpenseDto expenseDto) {
 		expenseService.addExpense(expenseDto);
+	}
+	
+	@RequestMapping(value = "/{expenseID}", method = RequestMethod.DELETE)
+	public void deleteExpense(@PathVariable Long expenseID) {
+		expenseService.deleteExpense(expenseID);
+	}
+	
+	@RequestMapping(value = "/{expenseID}", method = RequestMethod.GET)
+	public ExpenseDto getExpense(@PathVariable Long expenseID) {
+		return expenseService.getExpense(expenseID);
 	}
 }

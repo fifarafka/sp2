@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,8 +27,17 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void addCategory(@RequestBody @Valid CategoryDto categoryDto) {
-		categoryService.addCategory(categoryDto);
+	public CategoryDto addCategory(@RequestBody @Valid CategoryDto categoryDto) {
+		return categoryService.addCategory(categoryDto);
 	}
-
+	
+	@RequestMapping(value = "/{categoryID}", method = RequestMethod.DELETE)
+	public void deleteCategory(@PathVariable Long categoryID) {
+		categoryService.deleteCategory(categoryID);
+	}
+	
+	@RequestMapping(value = "/{categoryID}", method = RequestMethod.GET)
+	public CategoryDto getCategory(@PathVariable Long categoryID) {
+		return categoryService.getCategoty(categoryID);
+	}
 }
