@@ -7,6 +7,8 @@ public class ExpenseDto extends AbstractDto {
 	
 	private CategoryDto category;
 	
+	private String name;
+	
 	private BigDecimal value;
 	
 	private LocalDate dateOfExpense;
@@ -33,5 +35,13 @@ public class ExpenseDto extends AbstractDto {
 
 	public void setDateOfExpense(LocalDate dateOfExpense) {
 		this.dateOfExpense = dateOfExpense;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

@@ -4,15 +4,19 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Expense extends AbstractEntity {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8122220258686534111L;
+
 	private Category category;
+	
+	private String name;
 	
 	private BigDecimal value;
 	
@@ -41,6 +45,14 @@ public class Expense extends AbstractEntity {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }
