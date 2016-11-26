@@ -3,7 +3,9 @@ package com.myWallet.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -39,6 +41,7 @@ public class Expense extends AbstractEntity {
 		this.dateOfExpense = dateOfExpense;
 	}
 
+	@OneToOne(cascade=CascadeType.ALL)
 	public Category getCategory() {
 		return category;
 	}
