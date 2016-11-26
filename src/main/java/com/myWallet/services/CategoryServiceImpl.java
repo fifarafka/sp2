@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.myWallet.dto.CategoryDto;
+import com.myWallet.model.AppUser;
 import com.myWallet.model.Category;
 import com.myWallet.repositories.CategoryRepository;
 import com.myWallet.transformers.CategoryTransformer;
@@ -15,6 +16,9 @@ public class CategoryServiceImpl implements CategoryService {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private UserSessionService userSessionService;
 	
 	@Autowired
 	private CategoryTransformer categoryTransformer;
@@ -27,8 +31,9 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public List<CategoryDto> getCategoryList() {
-		List<Category> category = (List<Category>) categoryRepository.findAll();
-		return categoryTransformer.transformFromEntity(category);
+		AppUser appUser = userSessionService.getLoggedUser();
+		List<Category> categories = (List<Category>) categoryRepository.findAllByAppUser(appUser);
+		return categoryTransformer.transformFromEntity(categories);
 	}
 
 	@Override
