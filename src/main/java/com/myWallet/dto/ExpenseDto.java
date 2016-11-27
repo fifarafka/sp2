@@ -1,7 +1,7 @@
 package com.myWallet.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 
 public class ExpenseDto extends AbstractDto {
 	
@@ -11,7 +11,7 @@ public class ExpenseDto extends AbstractDto {
 	
 	private BigDecimal value;
 	
-	private LocalDate dateOfExpense;
+	private Date dateOfExpense;
 
 	public CategoryDto getCategory() {
 		return category;
@@ -29,11 +29,11 @@ public class ExpenseDto extends AbstractDto {
 		this.value = value;
 	}
 
-	public LocalDate getDateOfExpense() {
+	public Date getDateOfExpense() {
 		return dateOfExpense;
 	}
 
-	public void setDateOfExpense(LocalDate dateOfExpense) {
+	public void setDateOfExpense(Date dateOfExpense) {
 		this.dateOfExpense = dateOfExpense;
 	}
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.myWallet.dto.ExpenseDto;
+import com.myWallet.model.AppUser;
 import com.myWallet.model.Expense;
 import com.myWallet.repositories.ExpenseRepository;
 import com.myWallet.transformers.ExpenseTransformer;
@@ -18,6 +19,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 	
 	@Autowired
 	private ExpenseTransformer expenseTransformer;
+	
+	@Autowired
+	private UserSessionService userSessionService;
 
 	@Override
 	public void addExpense(ExpenseDto expenseDto) {
@@ -26,7 +30,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Override
 	public List<ExpenseDto> getListExpense() {
-		return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAll());
+		AppUser appUser = userSessionService.getLoggedUser();
+		return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUser(appUser));
 	}
 
 	@Override
