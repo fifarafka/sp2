@@ -10,5 +10,7 @@ import com.myWallet.model.Category;
 public interface CategoryRepository extends PagingAndSortingRepository<Category, Long>{
 	
 	List<Category> findAllByAppUser(AppUser appUser);
+	
+	Category findByAppUserAndId(AppUser appUser, Long Id);
 
 }

@@ -38,6 +38,6 @@ public class CategoryController {
 	
 	@RequestMapping(value = "/{categoryID}", method = RequestMethod.GET)
 	public CategoryDto getCategory(@PathVariable Long categoryID) {
-		return categoryService.getCategoty(categoryID);
+		return categoryService.getCategory(categoryID);
 	}
 }
