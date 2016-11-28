@@ -13,4 +13,6 @@ public interface CategoryRepository extends PagingAndSortingRepository<Category,
 	
 	Category findByAppUserAndId(AppUser appUser, Long Id);
 
+	List<Category> findByAppUserOrAppUserIsNull(AppUser appUser);
+
 }

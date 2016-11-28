@@ -32,17 +32,13 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<CategoryDto> getCategoryList() {
 		AppUser appUser = userSessionService.getLoggedUser();
-		List<Category> categories = (List<Category>) categoryRepository.findAllByAppUser(appUser);
+		List<Category> categories = (List<Category>) categoryRepository.findByAppUserOrAppUserIsNull(appUser);
 		return categoryTransformer.transformFromEntity(categories);
 	}
 
 	@Override
 	public CategoryDto getCategory(Long id) {
-		AppUser appUser = userSessionService.getLoggedUser();
-		return categoryTransformer.transformFromEntity(categoryRepository.findByAppUserAndId(appUser, id));
-		
-		// jezeli nie chcemy zawezac tylko do zalogowanego uzytkownika to:
-		// return categoryTransformer.transformFromEntity(categoryRepository.findOne(id));
+		return categoryTransformer.transformFromEntity(categoryRepository.findOne(id));
 	}
 
 	@Override
