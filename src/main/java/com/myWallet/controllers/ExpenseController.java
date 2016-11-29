@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myWallet.dto.ExpenseDto;
@@ -22,8 +23,13 @@ public class ExpenseController {
 	private ExpenseService expenseService;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public List<ExpenseDto> getExpenseList() {
-		return expenseService.getListExpense();
+	public List<ExpenseDto> getExpenseList(@RequestParam(value = "categoryName", required = false) String categoryName) {
+		if (categoryName==null) {
+			return expenseService.getListExpense();
+		}
+		else {
+			return expenseService.getListExpenseByCategoryName(categoryName);
+		}
 	}
 	
 	@RequestMapping(value = "/list/{sortType}", method = RequestMethod.GET)
