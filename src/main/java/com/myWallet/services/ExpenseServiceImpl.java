@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.myWallet.dto.ExpenseDto;
 import com.myWallet.model.AppUser;
+import com.myWallet.model.Category;
 import com.myWallet.model.Expense;
+import com.myWallet.repositories.CategoryRepository;
 import com.myWallet.repositories.ExpenseRepository;
 import com.myWallet.transformers.ExpenseTransformer;
 
@@ -16,6 +18,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 	
 	@Autowired
 	private ExpenseRepository expenseRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 	
 	@Autowired
 	private ExpenseTransformer expenseTransformer;
@@ -37,7 +42,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public List<ExpenseDto> getSortedListExpense(String sortType) {
 		AppUser appUser = userSessionService.getLoggedUser();
-		
 		switch(sortType) {
 			case "priceDesc":
 				return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUserOrderByValueDesc(appUser));
@@ -64,6 +68,13 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public void deleteExpense(Long id) {
 		expenseRepository.delete(id);
+	}
+
+	@Override
+	public List<ExpenseDto> getListExpenseByCategoryName(String categoryName) {
+		AppUser appUser = userSessionService.getLoggedUser();
+		Category category = categoryRepository.findOneByAppUserAndCategoryName(appUser, categoryName);
+		return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUserAndCategory(appUser, category));
 	}
 
 }

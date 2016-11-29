@@ -1,0 +1,3 @@
+org.springframework.context.annotation.Configuration=\
+com.myWallet.WebSecurityConfig,\
+com.myWallet.MvcConfig

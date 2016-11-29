@@ -15,5 +15,7 @@ public interface ExpenseService {
 	void deleteExpense(Long id);
 
 	List<ExpenseDto> getSortedListExpense(String sortType);
+	
+	List<ExpenseDto> getListExpenseByCategoryName(String categoryName);
 
 }
