@@ -26,6 +26,11 @@ public class ExpenseController {
 		return expenseService.getListExpense();
 	}
 	
+	@RequestMapping(value = "/list/{sortType}", method = RequestMethod.GET)
+	public List<ExpenseDto> getSortedExpenseList(@PathVariable String sortType) {
+		return expenseService.getSortedListExpense(sortType);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public void addExpense(@RequestBody @Valid ExpenseDto expenseDto) {
 		expenseService.addExpense(expenseDto);

@@ -11,4 +11,12 @@ public interface ExpenseRepository extends PagingAndSortingRepository<Expense, L
 	
 	List<Expense> findAllByAppUser(AppUser appUser);
 
+	List<Expense> findAllByAppUserOrderByDateOfExpenseAsc(AppUser appUser);
+
+	List<Expense> findAllByAppUserOrderByDateOfExpenseDesc(AppUser appUser);
+
+	List<Expense> findAllByAppUserOrderByValueAsc(AppUser appUser);
+
+	List<Expense> findAllByAppUserOrderByValueDesc(AppUser appUser);
+
 }

@@ -33,6 +33,28 @@ public class ExpenseServiceImpl implements ExpenseService {
 		AppUser appUser = userSessionService.getLoggedUser();
 		return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUser(appUser));
 	}
+	
+	@Override
+	public List<ExpenseDto> getSortedListExpense(String sortType) {
+		AppUser appUser = userSessionService.getLoggedUser();
+		
+		switch(sortType) {
+			case "priceDesc":
+				return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUserOrderByValueDesc(appUser));
+				
+			case "priceAsc":
+				return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUserOrderByValueAsc(appUser));
+				
+			case "dateDesc":
+				return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUserOrderByDateOfExpenseDesc(appUser));
+				
+			case "dateAsc":
+				return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUserOrderByDateOfExpenseAsc(appUser));
+				
+			default:
+				return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUser(appUser));
+		}
+	}
 
 	@Override
 	public ExpenseDto getExpense(Long id) {
