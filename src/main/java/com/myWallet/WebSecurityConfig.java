@@ -29,10 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
     
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/remotes/origin/master
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("zbigniew").password("haslo").roles("USER");
