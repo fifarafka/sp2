@@ -31,7 +31,7 @@ public class LoginController {
 			return "BADTOKEN";
 		} else {
 			response.setStatus(HttpStatus.OK.value());
-			return "TOKEN";
+			return token;
 		}
 	}
 

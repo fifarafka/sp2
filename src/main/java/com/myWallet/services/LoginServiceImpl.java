@@ -12,6 +12,9 @@ public class LoginServiceImpl implements LoginService{
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private TokenService tokenService;
 
 	@Override
 	public String login(LoginDto loginDto) {
@@ -19,7 +22,11 @@ public class LoginServiceImpl implements LoginService{
 		if (appUser == null) {
 			return null;
 		} else {
-			return "TOKENYOLO";
+			//String token = tokenService.generateToken(loginDto);
+			String token = "TOKEN";
+			appUser.setToken(token);
+			userRepository.save(appUser);
+			return token;
 		}
 	}
 

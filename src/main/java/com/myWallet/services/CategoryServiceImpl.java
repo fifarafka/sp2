@@ -18,9 +18,6 @@ public class CategoryServiceImpl implements CategoryService {
 	private CategoryRepository categoryRepository;
 	
 	@Autowired
-	private UserSessionService userSessionService;
-	
-	@Autowired
 	private CategoryTransformer categoryTransformer;
 
 	@Override
@@ -30,8 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<CategoryDto> getCategoryList() {
-		AppUser appUser = userSessionService.getLoggedUser();
+	public List<CategoryDto> getCategoryList(AppUser appUser) {
 		List<Category> categories = (List<Category>) categoryRepository.findByAppUserOrAppUserIsNull(appUser);
 		return categoryTransformer.transformFromEntity(categories);
 	}

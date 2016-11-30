@@ -9,9 +9,11 @@ import com.myWallet.model.Expense;
 
 public class AppUserDto {
 	
-private String login;
+	private String login;
 	
 	private String password;
+	
+	private String token;
 	
 	private List<Category> categories = new ArrayList<>();
 	
@@ -47,6 +49,14 @@ private String login;
 
 	public void setExpenses(List<Expense> expenses) {
 		this.expenses = expenses;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 }

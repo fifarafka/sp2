@@ -15,6 +15,8 @@ public class AppUser extends AbstractEntity {
 	
 	private String password;
 	
+	private String token;
+	
 	@OneToMany
 	//@ElementCollection
 	private List<Category> categories = new ArrayList<>();
@@ -38,5 +40,13 @@ public class AppUser extends AbstractEntity {
 
 	public void setLogin(String login) {
 		this.login = login;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 }
