@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myWallet.dto.LoginDto;
+import com.myWallet.dto.TokenDto;
 import com.myWallet.services.LoginService;
 
 
@@ -23,16 +25,18 @@ public class LoginController {
 	@Autowired
 	public LoginService loginService;
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes="application/json")
+	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes="application/json", produces= "application/json")
 	@ResponseBody
-	public String login(@RequestBody @Valid LoginDto loginDto, HttpServletResponse response) {
+	public TokenDto login(@RequestBody @Valid LoginDto loginDto, HttpServletResponse response) {
 		String token = loginService.login(loginDto);
 		if (token == null) {
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
-			return "BADTOKEN";
+			return null;
 		} else {
 			response.setStatus(HttpStatus.OK.value());
-			return token;
+			TokenDto tokenDto = new TokenDto();
+			tokenDto.setToken(token);
+			return tokenDto;
 		}
 	}
 	
