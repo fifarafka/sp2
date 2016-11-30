@@ -15,14 +15,14 @@ import com.myWallet.dto.LoginDto;
 import com.myWallet.services.LoginService;
 
 
-@RequestMapping(value = "/api/login")
+@RequestMapping(value = "/api")
 @RestController
 public class LoginController {
 	
 	@Autowired
 	public LoginService loginService;
 	
-	@RequestMapping(method = RequestMethod.POST, consumes="application/json")
+	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes="application/json")
 	@ResponseBody
 	public String login(@RequestBody @Valid LoginDto loginDto, HttpServletResponse response) {
 		String token = loginService.login(loginDto);
@@ -34,5 +34,17 @@ public class LoginController {
 			return token;
 		}
 	}
-
+	
+	@RequestMapping(method = RequestMethod.POST, consumes="application/json")
+	@ResponseBody
+	public String logout(@RequestBody @Valid LoginDto loginDto, HttpServletResponse response) {
+		String token = loginService.login(loginDto);
+		if (token == null) {
+			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+			return "BADTOKEN";
+		} else {
+			response.setStatus(HttpStatus.OK.value());
+			return token;
+		}
+	}
 }

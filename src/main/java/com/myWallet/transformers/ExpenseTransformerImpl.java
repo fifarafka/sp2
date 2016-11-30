@@ -10,16 +10,12 @@ import com.myWallet.dto.ExpenseDto;
 import com.myWallet.model.AppUser;
 import com.myWallet.model.Category;
 import com.myWallet.model.Expense;
-import com.myWallet.services.UserSessionService;
 
 @Service
 public class ExpenseTransformerImpl implements ExpenseTransformer {
 	
 	@Autowired
 	private CategoryTransformer categoryTransformer;
-	
-	@Autowired
-	private UserSessionService userSessionService;
 
 	@Override
 	public List<Expense> transformFromDto(List<ExpenseDto> dtos) {
@@ -32,8 +28,7 @@ public class ExpenseTransformerImpl implements ExpenseTransformer {
 
 	@Override
 	public Expense transformFromDto(Expense entity, ExpenseDto dto) {
-		AppUser appUser = userSessionService.getLoggedUser();
-		entity.setAppUser(appUser);
+		//entity.setAppUser(appUser);
 		entity.setDateOfExpense(dto.getDateOfExpense());
 		entity.setValue(dto.getValue());
 		entity.setName(dto.getName());

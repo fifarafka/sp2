@@ -24,9 +24,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 	
 	@Autowired
 	private ExpenseTransformer expenseTransformer;
-	
-	@Autowired
-	private UserSessionService userSessionService;
 
 	@Override
 	public void addExpense(ExpenseDto expenseDto) {
@@ -35,13 +32,13 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Override
 	public List<ExpenseDto> getListExpense() {
-		AppUser appUser = userSessionService.getLoggedUser();
+		AppUser appUser = null;
 		return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUser(appUser));
 	}
 	
 	@Override
 	public List<ExpenseDto> getSortedListExpense(String sortType) {
-		AppUser appUser = userSessionService.getLoggedUser();
+		AppUser appUser = null;
 		switch(sortType) {
 			case "priceDesc":
 				return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUserOrderByValueDesc(appUser));
@@ -72,7 +69,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Override
 	public List<ExpenseDto> getListExpenseByCategoryName(String categoryName) {
-		AppUser appUser = userSessionService.getLoggedUser();
+		AppUser appUser = null;
 		Category category = categoryRepository.findOneByAppUserAndCategoryName(appUser, categoryName);
 		return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUserAndCategory(appUser, category));
 	}
