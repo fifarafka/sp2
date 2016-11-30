@@ -1,5 +1,6 @@
 package com.myWallet.controllers;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -35,16 +36,10 @@ public class LoginController {
 		}
 	}
 	
-	@RequestMapping(value = "/logout", method = RequestMethod.POST, consumes="application/json")
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	@ResponseBody
-	public String logout(@RequestBody @Valid LoginDto loginDto, HttpServletResponse response) {
-		String token = loginService.login(loginDto);
-		if (token == null) {
-			response.setStatus(HttpStatus.UNAUTHORIZED.value());
-			return "BADTOKEN";
-		} else {
-			response.setStatus(HttpStatus.OK.value());
-			return token;
-		}
+	public void logout(HttpServletRequest request) {
+		String token = request.getHeader("Authorization");
+		loginService.logout(token);
 	}
 }

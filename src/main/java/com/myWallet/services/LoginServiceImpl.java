@@ -30,4 +30,11 @@ public class LoginServiceImpl implements LoginService{
 		}
 	}
 
+	@Override
+	public void logout(String token) {
+		AppUser appUser = userRepository.findOneByToken(token);
+		appUser.setToken(null);
+		userRepository.save(appUser);
+	}
+
 }
