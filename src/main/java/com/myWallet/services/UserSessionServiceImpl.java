@@ -1,8 +1,6 @@
 package com.myWallet.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import com.myWallet.model.AppUser;
@@ -15,8 +13,9 @@ public class UserSessionServiceImpl implements UserSessionService {
 	UserRepository userRepository;
 	
 	public AppUser getLoggedUser(){	 
-		  User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		  String login = user.getUsername();
+		  //User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		  //String login = user.getUsername();
+		String login = "login";
 		  return userRepository.findOneByLogin(login);
 		}
 
