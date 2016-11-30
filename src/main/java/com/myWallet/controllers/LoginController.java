@@ -35,7 +35,7 @@ public class LoginController {
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, consumes="application/json")
+	@RequestMapping(value = "/logout", method = RequestMethod.POST, consumes="application/json")
 	@ResponseBody
 	public String logout(@RequestBody @Valid LoginDto loginDto, HttpServletResponse response) {
 		String token = loginService.login(loginDto);
