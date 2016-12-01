@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.myWallet.dto.ExpenseDto;
-import com.myWallet.model.AppUser;
-import com.myWallet.model.Category;
 import com.myWallet.model.Expense;
 
 @Service
@@ -16,6 +14,7 @@ public class ExpenseTransformerImpl implements ExpenseTransformer {
 	
 	@Autowired
 	private CategoryTransformer categoryTransformer;
+	
 
 	@Override
 	public List<Expense> transformFromDto(List<ExpenseDto> dtos) {
@@ -28,11 +27,10 @@ public class ExpenseTransformerImpl implements ExpenseTransformer {
 
 	@Override
 	public Expense transformFromDto(Expense entity, ExpenseDto dto) {
-		//entity.setAppUser(appUser);
 		entity.setDateOfExpense(dto.getDateOfExpense());
 		entity.setValue(dto.getValue());
 		entity.setName(dto.getName());
-		entity.setCategory(categoryTransformer.transformFromDto(new Category(), dto.getCategory()));
+		//entity.setCategory(categoryRepository.fi);
 		return entity;
 	}
 

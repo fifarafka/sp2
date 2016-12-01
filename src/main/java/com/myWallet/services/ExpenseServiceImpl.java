@@ -26,13 +26,15 @@ public class ExpenseServiceImpl implements ExpenseService {
 	private ExpenseTransformer expenseTransformer;
 
 	@Override
-	public void addExpense(ExpenseDto expenseDto) {
-		expenseRepository.save(expenseTransformer.transformFromDto(new Expense(), expenseDto));
+	public void addExpense(ExpenseDto expenseDto, AppUser appUser) {
+		Expense expense = new Expense();
+		expense.setAppUser(appUser);
+		expense.setCategory(categoryRepository.findOneByAppUserAndCategoryName(appUser, expenseDto.getCategory().getCategoryName()));
+		expenseRepository.save(expenseTransformer.transformFromDto(expense, expenseDto));
 	}
 
 	@Override
-	public List<ExpenseDto> getListExpense() {
-		AppUser appUser = null;
+	public List<ExpenseDto> getListExpense(AppUser appUser) {
 		return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUser(appUser));
 	}
 	

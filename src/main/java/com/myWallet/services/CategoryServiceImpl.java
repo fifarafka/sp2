@@ -28,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public List<CategoryDto> getCategoryList(AppUser appUser) {
-		List<Category> categories = (List<Category>) categoryRepository.findByAppUserOrAppUserIsNull(appUser);
+		List<Category> categories = (List<Category>) categoryRepository.findAllByAppUser(appUser);
 		return categoryTransformer.transformFromEntity(categories);
 	}
 
