@@ -31,14 +31,12 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public List<ExpenseDto> getListExpense() {
-		AppUser appUser = null;
+	public List<ExpenseDto> getListExpense(AppUser appUser) {
 		return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUser(appUser));
 	}
 	
 	@Override
-	public List<ExpenseDto> getSortedListExpense(String sortType) {
-		AppUser appUser = null;
+	public List<ExpenseDto> getSortedListExpense(AppUser appUser, String sortType) {
 		switch(sortType) {
 			case "priceDesc":
 				return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUserOrderByValueDesc(appUser));
@@ -68,9 +66,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public List<ExpenseDto> getListExpenseByCategoryName(String categoryName) {
-		AppUser appUser = null;
-		Category category = categoryRepository.findOneByAppUserAndCategoryName(appUser, categoryName);
+	public List<ExpenseDto> getListExpenseByCategoryName(AppUser appUser, String categoryName) {
+		Category category = categoryRepository.findByAppUserAndCategoryName(appUser, categoryName);
 		return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUserAndCategory(appUser, category));
 	}
 
