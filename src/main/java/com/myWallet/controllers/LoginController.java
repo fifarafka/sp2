@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myWallet.dto.LoginDto;
+import com.myWallet.dto.AppUserDto;
 import com.myWallet.dto.TokenDto;
 import com.myWallet.services.LoginService;
 
@@ -27,7 +26,7 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes="application/json", produces= "application/json")
 	@ResponseBody
-	public TokenDto login(@RequestBody @Valid LoginDto loginDto, HttpServletResponse response) {
+	public TokenDto login(@RequestBody @Valid AppUserDto loginDto, HttpServletResponse response) {
 		String token = loginService.login(loginDto);
 		if (token == null) {
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());

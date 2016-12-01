@@ -1,22 +1,25 @@
 package com.myWallet.services;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.myWallet.dto.LoginDto;
+import com.myWallet.dto.AppUserDto;
 import com.myWallet.model.AppUser;
-import com.myWallet.repositories.UserRepository;
+import com.myWallet.repositories.AppUserRepository;
 
 @Service
 public class TokenServiceImpl implements TokenService{
 	
 	@Autowired
-	private UserRepository userRepository;
+	private AppUserRepository userRepository;
 
 	@Override
-	public String generateToken(LoginDto loginDto) {
-		// TODO Auto-generated method stub
-		return null;
+	public String generateToken(AppUserDto loginDto) {
+		SecureRandom random = new SecureRandom();
+		return new BigInteger(130, random).toString(32);
 	}
 
 	@Override

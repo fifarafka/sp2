@@ -1,11 +1,11 @@
 package com.myWallet.services;
 
 
-import com.myWallet.dto.LoginDto;
+import com.myWallet.dto.AppUserDto;
 
 public interface LoginService {
 	
-	String login(LoginDto loginDto);
+	String login(AppUserDto loginDto);
 	
 	void logout(String token);
 
