@@ -19,7 +19,7 @@ public class AppUserServiceImpl implements AppUserService {
 
 	@Override
 	public boolean addUser(AppUserDto appUserDto) {
-		AppUser appUser = appUserRepository.findOneByLoginAndPassword(appUserDto.getLogin(), appUserDto.getPassword());
+		AppUser appUser = appUserRepository.findOneByLogin(appUserDto.getLogin());
 		if (appUser!=null) {
 			return false;
 		} else {
