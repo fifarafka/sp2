@@ -32,38 +32,30 @@ public class ExpenseController {
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public List<ExpenseDto> getExpenseList(@RequestParam(value = "categoryName", required = false) String categoryName, HttpServletRequest request, HttpServletResponse response) {
-		String token = request.getHeader("Authorization");
-		AppUser user = tokenService.validateToken(token);
-		if (user == null) {
-			response.setStatus(HttpStatus.UNAUTHORIZED.value());
-			return null;
-		} else {
-			response.setStatus(HttpStatus.OK.value());
-			return expenseService.getListExpense(user);
-	public List<ExpenseDto> getExpenseList(@RequestParam(value = "categoryName", required = false) String categoryName, HttpServletRequest request, HttpServletResponse response) {
-		String token = request.getHeader("Authorization");
-		AppUser user = tokenService.validateToken(token);
-		if (user == null) {
-			response.setStatus(HttpStatus.UNAUTHORIZED.value());
-			return null;
-		} else {
-			response.setStatus(HttpStatus.OK.value());
-			return expenseService.getListExpense(user);
-		}
+		 		String token = request.getHeader("Authorization");
+		 		AppUser user = tokenService.validateToken(token);
+		 		if (user == null) {
+		 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+		 			return null;
+		 		} else {
+		 			response.setStatus(HttpStatus.OK.value());
+		 			return expenseService.getListExpense(user);
+		  		}
 	}
 	
-	@RequestMapping(value = "/list/category/{categoryName}", method = RequestMethod.GET)
+	
+/*	@RequestMapping(value = "/list/category/{categoryName}", method = RequestMethod.GET)
 	public List<ExpenseDto> getExpenseListByCategoryName(@PathVariable String categoryName, HttpServletRequest request, HttpServletResponse response) {
-		String token = request.getHeader("Authorization");
-		AppUser user = tokenService.validateToken(token);
-		if (user == null) {
-			response.setStatus(HttpStatus.UNAUTHORIZED.value());
-			return null;
-		} else {
-			response.setStatus(HttpStatus.OK.value());
-			return expenseService.getListExpenseByCategoryName(user, categoryName);
-		}
-	}
+	 		String token = request.getHeader("Authorization");
+	 		AppUser user = tokenService.validateToken(token);
+	 		if (user == null) {
+	 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+	 			return null;
+	 		} else {
+	 			response.setStatus(HttpStatus.OK.value());
+	 			return expenseService.getListExpenseByCategoryName(user, categoryName);
+	 		}
+	}*/
 	
 	@RequestMapping(value = "/list/sort/{sortType}", method = RequestMethod.GET)
 	public List<ExpenseDto> getSortedExpenseList(@PathVariable String sortType, HttpServletRequest request, HttpServletResponse response) {
@@ -79,20 +71,16 @@ public class ExpenseController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public void addExpense(@RequestBody @Valid ExpenseDto expenseDto, HttpServletRequest request) {
-		String token = request.getHeader("Authorization");
-		AppUser user = tokenService.validateToken(token);
-		expenseService.addExpense(expenseDto, user);
 	public void addExpense(@RequestBody @Valid ExpenseDto expenseDto, HttpServletRequest request, HttpServletResponse response) {
 		String token = request.getHeader("Authorization");
 		AppUser user = tokenService.validateToken(token);
 		if (user == null) {
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
-		} else {
-			response.setStatus(HttpStatus.CREATED.value());
-			expenseService.addExpense(expenseDto);
+			} else {
+		 	response.setStatus(HttpStatus.CREATED.value());
+		 	expenseService.addExpense(expenseDto, user);
+			}
 		}
-	}
 	
 	@RequestMapping(value = "/{expenseID}", method = RequestMethod.DELETE)
 	public void deleteExpense(@PathVariable Long expenseID, HttpServletRequest request, HttpServletResponse response) {

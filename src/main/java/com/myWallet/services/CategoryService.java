@@ -7,7 +7,7 @@ import com.myWallet.model.AppUser;
 
 public interface CategoryService {
 	
-	CategoryDto addCategory(CategoryDto categoryDto);
+	CategoryDto addCategory(CategoryDto categoryDto, AppUser user);
 	
 	List<CategoryDto> getCategoryList(AppUser appUser);
 	

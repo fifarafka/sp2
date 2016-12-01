@@ -21,8 +21,10 @@ public class CategoryServiceImpl implements CategoryService {
 	private CategoryTransformer categoryTransformer;
 
 	@Override
-	public CategoryDto addCategory(CategoryDto categoryDto) {
-		Category category = categoryRepository.save(categoryTransformer.transformFromDto(new Category(), categoryDto));
+	public CategoryDto addCategory(CategoryDto categoryDto, AppUser appUser) {
+		Category newCategory = new Category();
+		newCategory.setAppUser(appUser);
+		Category category = categoryRepository.save(categoryTransformer.transformFromDto(newCategory, categoryDto));
 		return categoryTransformer.transformFromEntity(category);
 	}
 

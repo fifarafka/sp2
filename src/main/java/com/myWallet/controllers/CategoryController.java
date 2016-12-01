@@ -53,7 +53,7 @@ public class CategoryController {
 			return null;
 		} else {
 			response.setStatus(HttpStatus.CREATED.value());
-			return categoryService.addCategory(categoryDto);
+			return categoryService.addCategory(categoryDto, user);
 		}
 	}
 	

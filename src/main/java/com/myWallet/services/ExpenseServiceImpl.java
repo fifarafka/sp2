@@ -70,7 +70,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Override
 	public List<ExpenseDto> getListExpenseByCategoryName(AppUser appUser, String categoryName) {
-		Category category = categoryRepository.findByAppUserAndCategoryName(appUser, categoryName);
+		Category category = categoryRepository.findOneByAppUserAndCategoryName(appUser, categoryName);
 		return expenseTransformer.transformFromEntity((List<Expense>)expenseRepository.findAllByAppUserAndCategory(appUser, category));
 	}
 
