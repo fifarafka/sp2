@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myWallet.dto.CategoryDto;
@@ -46,18 +45,40 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.CREATED)
-	public CategoryDto addCategory(@RequestBody @Valid CategoryDto categoryDto) {
-		return categoryService.addCategory(categoryDto);
+	public CategoryDto addCategory(@RequestBody @Valid CategoryDto categoryDto, HttpServletRequest request, HttpServletResponse response) {
+		String token = request.getHeader("Authorization");
+		AppUser user = tokenService.validateToken(token);
+		if (user == null) {
+			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+			return null;
+		} else {
+			response.setStatus(HttpStatus.CREATED.value());
+			return categoryService.addCategory(categoryDto);
+		}
 	}
 	
 	@RequestMapping(value = "/{categoryID}", method = RequestMethod.DELETE)
-	public void deleteCategory(@PathVariable Long categoryID) {
-		categoryService.deleteCategory(categoryID);
+	public void deleteCategory(@PathVariable Long categoryID, HttpServletRequest request, HttpServletResponse response) {
+		String token = request.getHeader("Authorization");
+		AppUser user = tokenService.validateToken(token);
+		if (user == null) {
+			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+		} else {
+			response.setStatus(HttpStatus.OK.value());
+			categoryService.deleteCategory(categoryID);
+		}
 	}
 	
 	@RequestMapping(value = "/{categoryID}", method = RequestMethod.GET)
-	public CategoryDto getCategory(@PathVariable Long categoryID) {
-		return categoryService.getCategory(categoryID);
+	public CategoryDto getCategory(@PathVariable Long categoryID, HttpServletRequest request, HttpServletResponse response) {
+		String token = request.getHeader("Authorization");
+		AppUser user = tokenService.validateToken(token);
+		if (user == null) {
+			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+			return null;
+		} else {
+			response.setStatus(HttpStatus.OK.value());
+			return categoryService.getCategory(categoryID);
+		}
 	}
 }
