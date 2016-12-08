@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.myWallet.dto.AppUserDto;
@@ -25,6 +26,15 @@ public class TokenServiceImpl implements TokenService{
 	@Override
 	public AppUser validateToken(String token) {
 		return userRepository.findOneByToken(token);
+	}
+	
+	public int getStatusAuthorization(String token) {
+		AppUser appUser = validateToken(token);
+		if (appUser == null) {
+			return HttpStatus.UNAUTHORIZED.value();
+		} else {
+			return HttpStatus.OK.value();
+		}
 	}
 
 }

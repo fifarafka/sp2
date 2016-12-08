@@ -8,5 +8,5 @@ public interface TokenService {
 	String generateToken(AppUserDto loginDto);
 	
 	AppUser validateToken(String token);
-
+	
 }

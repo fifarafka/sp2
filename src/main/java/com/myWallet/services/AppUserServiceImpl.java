@@ -32,9 +32,7 @@ public class AppUserServiceImpl implements AppUserService {
 			if (user!=null) {
 				CategoryDto defaultCategory = new CategoryDto();
 				defaultCategory.setCategoryName("Defaultowa kategoria");
-				
 				categoryService.addCategory(defaultCategory, user);
-				
 				return true;
 			} else {
 				return false;
