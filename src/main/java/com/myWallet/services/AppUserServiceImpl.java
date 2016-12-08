@@ -7,7 +7,6 @@ import com.myWallet.dto.AppUserDto;
 import com.myWallet.dto.CategoryDto;
 import com.myWallet.model.AppUser;
 import com.myWallet.repositories.AppUserRepository;
-import com.myWallet.repositories.CategoryRepository;
 import com.myWallet.transformers.AppUserTransformer;
 
 @Service

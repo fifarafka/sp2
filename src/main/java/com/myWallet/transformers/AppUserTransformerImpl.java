@@ -20,6 +20,7 @@ public class AppUserTransformerImpl implements AppUserTransformer {
 	public AppUser transformFromDto(AppUser entity, AppUserDto dto) {
 		entity.setLogin(dto.getLogin());
 		entity.setPassword(dto.getPassword());
+		entity.setReport(dto.isReport());
 		return entity;
 	}
 
