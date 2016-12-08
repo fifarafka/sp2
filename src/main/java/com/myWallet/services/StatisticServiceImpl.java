@@ -2,12 +2,14 @@ package com.myWallet.services;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.myWallet.dto.CategoryStatisticDto;
+import com.myWallet.dto.MonthStatisticDto;
 import com.myWallet.model.AppUser;
 import com.myWallet.model.Category;
 import com.myWallet.model.Expense;
@@ -43,6 +45,40 @@ public class StatisticServiceImpl implements StatisticService {
 		}
 		statistic.setValue(value);
 		return statistic;
+	}
+
+	@Override
+	public List<MonthStatisticDto> getStatisticByMonth(AppUser appUser) {
+		List<Expense> expenses = expenseRepository.findAllByAppUserOrderByDateOfExpenseAsc(appUser);
+		List<MonthStatisticDto> statistics = new ArrayList<>();
+		for (Expense expense : expenses) {
+				countMonthValue(expense, statistics);
+		}
+		return statistics;
+	}
+	
+	private void countMonthValue(Expense expense, List<MonthStatisticDto> statistics) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(expense.getDateOfExpense());
+		MonthStatisticDto dto;
+		if (statistics.size() != 0) {
+			dto = statistics.get(statistics.size()-1);
+			if (dto.getYear() == cal.get(Calendar.YEAR) && dto.getMonth() == (cal.get(Calendar.MONTH))+1) {
+				dto.setValue(dto.getValue().add(expense.getValue()));
+			} else {
+				dto = new MonthStatisticDto();
+				dto.setMonth(cal.get(Calendar.MONTH)+1);
+				dto.setYear(cal.get(Calendar.YEAR));
+				dto.setValue(expense.getValue());
+				statistics.add(dto);
+			}
+		} else {
+			dto = new MonthStatisticDto();
+			dto.setMonth(cal.get(Calendar.MONTH)+1);
+			dto.setYear(cal.get(Calendar.YEAR));
+			dto.setValue(expense.getValue());
+			statistics.add(dto);
+		}
 	}
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myWallet.dto.CategoryStatisticDto;
+import com.myWallet.dto.MonthStatisticDto;
 import com.myWallet.model.AppUser;
 import com.myWallet.services.StatisticService;
 import com.myWallet.services.TokenService;
@@ -29,7 +30,7 @@ public class StatisticController {
 	
 	@RequestMapping(value = "/category", method = RequestMethod.GET)
 	@ResponseBody
-	public List<CategoryStatisticDto> logout(HttpServletRequest request, HttpServletResponse response) {
+	public List<CategoryStatisticDto> getStatisticByCategory(HttpServletRequest request, HttpServletResponse response) {
 		String token = request.getHeader("Authorization");
 		AppUser user = tokenService.validateToken(token);
  		if (user == null) {
@@ -38,6 +39,20 @@ public class StatisticController {
  		} else {
  			response.setStatus(HttpStatus.OK.value());
  			return statisticService.getStatisticByCategory(user);
+ 		}
+	}
+	
+	@RequestMapping(value = "/month", method = RequestMethod.GET)
+	@ResponseBody
+	public List<MonthStatisticDto> getStatisticByMonth(HttpServletRequest request, HttpServletResponse response) {
+		String token = request.getHeader("Authorization");
+		AppUser user = tokenService.validateToken(token);
+ 		if (user == null) {
+ 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+ 			return null;
+ 		} else {
+ 			response.setStatus(HttpStatus.OK.value());
+ 			return statisticService.getStatisticByMonth(user);
  		}
 	}
 }
