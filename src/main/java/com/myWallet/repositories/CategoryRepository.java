@@ -12,5 +12,4 @@ public interface CategoryRepository extends PagingAndSortingRepository<Category,
 	List<Category> findAllByAppUser(AppUser appUser);
 	
 	Category findOneByAppUserAndCategoryName(AppUser appUser, String categoryName);
-
 }

@@ -44,9 +44,9 @@ public class ExpenseController {
 	}
 	
 	
-/*	@RequestMapping(value = "/list/category/{categoryName}", method = RequestMethod.GET)
+	@RequestMapping(value = "/list/category/{categoryName}", method = RequestMethod.GET)
 	public List<ExpenseDto> getExpenseListByCategoryName(@PathVariable String categoryName, HttpServletRequest request, HttpServletResponse response) {
-	 		String token = request.getHeader("Authorization");
+			String token = request.getHeader("Authorization");
 	 		AppUser user = tokenService.validateToken(token);
 	 		if (user == null) {
 	 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -55,7 +55,7 @@ public class ExpenseController {
 	 			response.setStatus(HttpStatus.OK.value());
 	 			return expenseService.getListExpenseByCategoryName(user, categoryName);
 	 		}
-	}*/
+	}
 	
 	@RequestMapping(value = "/list/sort/{sortType}", method = RequestMethod.GET)
 	public List<ExpenseDto> getSortedExpenseList(@PathVariable String sortType, HttpServletRequest request, HttpServletResponse response) {
