@@ -29,9 +29,33 @@ public class AppUserServiceImpl implements AppUserService {
 		} else {
 			AppUser user = appUserRepository.save(appUserTransformer.transformFromDto(new AppUser(), appUserDto));
 			if (user!=null) {
-				CategoryDto defaultCategory = new CategoryDto();
-				defaultCategory.setCategoryName("Defaultowa kategoria");
-				categoryService.addCategory(defaultCategory, user);
+				CategoryDto food = new CategoryDto();
+				food.setCategoryName("Food");
+				categoryService.addCategory(food, user);
+				
+				CategoryDto clothing = new CategoryDto();
+				clothing.setCategoryName("Clothing");
+				categoryService.addCategory(clothing, user);
+				
+				CategoryDto education = new CategoryDto();
+				education.setCategoryName("Education");
+				categoryService.addCategory(education, user);
+				
+				CategoryDto hobbies = new CategoryDto();
+				hobbies.setCategoryName("Hobbies");
+				categoryService.addCategory(hobbies, user);
+				
+				CategoryDto household = new CategoryDto();
+				household.setCategoryName("Household");
+				categoryService.addCategory(household, user);
+				
+				CategoryDto taxes = new CategoryDto();
+				taxes.setCategoryName("Taxes");
+				categoryService.addCategory(taxes, user);
+				
+				CategoryDto other = new CategoryDto();
+				other.setCategoryName("Other");
+				categoryService.addCategory(other, user);
 				return true;
 			} else {
 				return false;
