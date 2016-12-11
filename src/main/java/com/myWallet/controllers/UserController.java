@@ -1,5 +1,6 @@
 package com.myWallet.controllers;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -12,7 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myWallet.dto.AppUserDto;
+import com.myWallet.dto.ExpenseDto;
+import com.myWallet.dto.PasswordDto;
+import com.myWallet.model.AppUser;
+import com.myWallet.repositories.AppUserRepository;
 import com.myWallet.services.AppUserService;
+import com.myWallet.services.TokenService;
 
 @RequestMapping(value = "/api/user")
 @RestController
@@ -20,6 +26,12 @@ public class UserController {
 	
 	@Autowired
 	private AppUserService appUserService;
+	
+	@Autowired
+	private TokenService tokenService;
+	
+	@Autowired
+	private AppUserRepository appUserRepository;
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes="application/json")
 	@ResponseBody
@@ -32,6 +44,23 @@ public class UserController {
 			} else {
 				response.setStatus(HttpStatus.CONFLICT.value());
 			}
+		}
+	}
+	
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	public void changePassword(@RequestBody @Valid PasswordDto passwordDto, HttpServletRequest request, HttpServletResponse response) {
+		String token = request.getHeader("Authorization");
+		AppUser user = tokenService.validateToken(token);
+		if (user == null) {
+			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+		
+		} else if (!passwordDto.getNewPassword().equals(passwordDto.getConfirmedPassword()) || 
+				!passwordDto.getOldPassword().equals(user.getPassword())) {
+		 	response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+		
+		} else {
+			response.setStatus(HttpStatus.OK.value());
+			appUserService.changePassword(user, passwordDto.getNewPassword());
 		}
 	}
 	

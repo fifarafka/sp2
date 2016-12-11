@@ -62,4 +62,11 @@ public class AppUserServiceImpl implements AppUserService {
 			}
 		}
 	}
+	
+	@Override
+	public void changePassword(AppUser user, String newPassword) {
+		user.setPassword(newPassword);
+		appUserRepository.save(user);
+		
+	}
 }
