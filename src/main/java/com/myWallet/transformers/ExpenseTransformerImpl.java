@@ -46,6 +46,7 @@ public class ExpenseTransformerImpl implements ExpenseTransformer {
 	@Override
 	public ExpenseDto transformFromEntity(Expense entity) {
 		ExpenseDto dto = new ExpenseDto();
+		dto.setId(entity.getId());
 		dto.setDateOfExpense(entity.getDateOfExpense());
 		dto.setValue(entity.getValue());
 		dto.setName(entity.getName());

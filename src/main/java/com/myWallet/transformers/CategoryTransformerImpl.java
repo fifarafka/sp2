@@ -40,6 +40,7 @@ public class CategoryTransformerImpl implements CategoryTransformer {
 	@Override
 	public CategoryDto transformFromEntity(Category entity) {
 		CategoryDto dto = new CategoryDto();
+		dto.setId(entity.getId());
 		dto.setCategoryName(entity.getCategoryName());
 		return dto;
 	}
