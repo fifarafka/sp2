@@ -5,24 +5,12 @@ import java.util.Date;
 
 public class ExpenseDto extends AbstractDto {
 	
-	private Long id;
-	
 	private CategoryDto category;
-	
 	private String name;
-	
 	private BigDecimal value;
-	
 	private Date dateOfExpense;
 	
-	public Long getId() {
-		return id;
-	}
 	
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public CategoryDto getCategory() {
 		return category;
 	}
