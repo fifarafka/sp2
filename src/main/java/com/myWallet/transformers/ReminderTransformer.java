@@ -2,9 +2,12 @@ package com.myWallet.transformers;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.myWallet.dto.ReminderDto;
 import com.myWallet.model.Reminder;
 
+@Service
 public class ReminderTransformer implements AbstractTransformer<Reminder, ReminderDto>
 {
 
