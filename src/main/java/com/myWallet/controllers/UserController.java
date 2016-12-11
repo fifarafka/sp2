@@ -13,18 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myWallet.dto.AppUserDto;
-<<<<<<< HEAD
-import com.myWallet.dto.ExpenseDto;
 import com.myWallet.dto.PasswordDto;
 import com.myWallet.model.AppUser;
-import com.myWallet.repositories.AppUserRepository;
 import com.myWallet.services.AppUserService;
-=======
+
 import com.myWallet.dto.ReminderDto;
-import com.myWallet.model.AppUser;
 import com.myWallet.services.AppUserService;
 import com.myWallet.services.ReminderService;
->>>>>>> a2915a09e00c3f2b1b93699aae54a7262ce68a14
 import com.myWallet.services.TokenService;
 
 @RequestMapping(value = "/api/user")
@@ -36,13 +31,9 @@ public class UserController {
 	
 	@Autowired
 	private TokenService tokenService;
-	
+
 	@Autowired
-<<<<<<< HEAD
-	private AppUserRepository appUserRepository;
-=======
 	private ReminderService reminderService;
->>>>>>> a2915a09e00c3f2b1b93699aae54a7262ce68a14
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes="application/json")
 	@ResponseBody
@@ -58,7 +49,6 @@ public class UserController {
 		}
 	}
 	
-<<<<<<< HEAD
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
 	public void changePassword(@RequestBody @Valid PasswordDto passwordDto, HttpServletRequest request, HttpServletResponse response) {
 		String token = request.getHeader("Authorization");
@@ -76,7 +66,6 @@ public class UserController {
 		}
 	}
 	
-=======
 	@RequestMapping(value = "/reminder", method = RequestMethod.POST, consumes="application/json")
 	@ResponseBody
 	public void register(@RequestBody @Valid ReminderDto reminderDto, HttpServletResponse response, HttpServletRequest request) {
@@ -89,7 +78,4 @@ public class UserController {
  			reminderService.addReminder(reminderDto, user);
  		}
 	}
-	
-	
->>>>>>> a2915a09e00c3f2b1b93699aae54a7262ce68a14
 }
