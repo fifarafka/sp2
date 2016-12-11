@@ -26,7 +26,7 @@ import com.myWallet.transformers.ReminderTransformer;
 public class ReminderServiceImpl implements ReminderService {
 	
 	private static String USER_NAME = "hajsApplication";
-    private static String PASSWORD = "projektow";
+    private static String PASSWORD = "";
     
     @Autowired
     private ReminderRepository reminderRepository;
