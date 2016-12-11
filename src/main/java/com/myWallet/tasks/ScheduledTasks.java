@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.myWallet.services.MailService;
+import com.myWallet.services.ReminderService;
 
 @Component
 public class ScheduledTasks {
@@ -19,11 +19,11 @@ public class ScheduledTasks {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     @Autowired
-    private MailService mailService;
+    private ReminderService reminderService;
     
-    @Scheduled(cron = "0 0 6 1 * *", zone = "Europe/Warsaw")
+    @Scheduled(cron = "0 0 8 * * *", zone = "Europe/Warsaw")
     public void reportCurrentTime() {
-        log.info(dateFormat.format(new Date())+ "Sending reports to users.");
-        mailService.sendReport();
+        log.info(dateFormat.format(new Date())+ "Sending reminders to users.");
+        reminderService.sendReport();
     }
 }
