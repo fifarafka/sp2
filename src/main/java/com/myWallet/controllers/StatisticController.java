@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.myWallet.dto.CategoryStatisticDto;
 import com.myWallet.dto.MonthStatisticDto;
 import com.myWallet.model.AppUser;
+import com.myWallet.services.ReminderService;
 import com.myWallet.services.StatisticService;
 import com.myWallet.services.TokenService;
 
@@ -27,6 +28,9 @@ public class StatisticController {
 	
 	@Autowired
 	private StatisticService statisticService;
+	
+	@Autowired
+	private ReminderService reminderService;
 	
 	@RequestMapping(value = "/category", method = RequestMethod.GET)
 	@ResponseBody
@@ -54,5 +58,10 @@ public class StatisticController {
  			response.setStatus(HttpStatus.OK.value());
  			return statisticService.getStatisticByMonth(user);
  		}
+	}
+	
+	@RequestMapping(value = "/mailTest", method = RequestMethod.GET)
+	public void sendEmail(HttpServletRequest request, HttpServletResponse response) {
+		reminderService.sendReport();
 	}
 }

@@ -1,5 +1,6 @@
 package com.myWallet.controllers;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -12,7 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myWallet.dto.AppUserDto;
+import com.myWallet.dto.ReminderDto;
+import com.myWallet.model.AppUser;
 import com.myWallet.services.AppUserService;
+import com.myWallet.services.ReminderService;
+import com.myWallet.services.TokenService;
 
 @RequestMapping(value = "/api/user")
 @RestController
@@ -20,6 +25,12 @@ public class UserController {
 	
 	@Autowired
 	private AppUserService appUserService;
+	
+	@Autowired
+	private TokenService tokenService;
+	
+	@Autowired
+	private ReminderService reminderService;
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes="application/json")
 	@ResponseBody
@@ -34,5 +45,19 @@ public class UserController {
 			}
 		}
 	}
+	
+	@RequestMapping(value = "/reminder", method = RequestMethod.POST, consumes="application/json")
+	@ResponseBody
+	public void register(@RequestBody @Valid ReminderDto reminderDto, HttpServletResponse response, HttpServletRequest request) {
+		String token = request.getHeader("Authorization");
+		AppUser user = tokenService.validateToken(token);
+ 		if (user == null) {
+ 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+ 		} else {
+ 			response.setStatus(HttpStatus.CREATED.value());
+ 			reminderService.addReminder(reminderDto, user);
+ 		}
+	}
+	
 	
 }

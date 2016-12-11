@@ -18,14 +18,14 @@ public class AppUser extends AbstractEntity {
 	private String token;
 
 	private boolean report;
+	
+	@OneToMany
+	private List<Reminder> reminders = new ArrayList<>();
 
 	@OneToMany
-	//@ElementCollection
 	private List<Category> categories = new ArrayList<>();
 	
-	
 	@OneToMany
-	//@ElementCollection
 	private List<Expense> expenses = new ArrayList<>();
 
 	public String getPassword() {
