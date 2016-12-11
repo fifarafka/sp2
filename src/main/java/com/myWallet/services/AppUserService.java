@@ -9,4 +9,6 @@ public interface AppUserService {
 
 	void changePassword(AppUser user, String newPassword);
 
+	void changeReport(AppUser user, boolean newReport);
+
 }

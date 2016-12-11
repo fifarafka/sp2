@@ -69,4 +69,10 @@ public class AppUserServiceImpl implements AppUserService {
 		appUserRepository.save(user);
 		
 	}
+	
+	@Override
+	public	void changeReport(AppUser user, boolean newReport) {
+		user.setReport(newReport);
+		appUserRepository.save(user);
+	}
 }
