@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myWallet.dto.CategoryStatisticDto;
+import com.myWallet.dto.DayStatisticDto;
 import com.myWallet.dto.MonthStatisticDto;
 import com.myWallet.model.AppUser;
 import com.myWallet.services.ReminderService;
@@ -57,6 +58,20 @@ public class StatisticController {
  		} else {
  			response.setStatus(HttpStatus.OK.value());
  			return statisticService.getStatisticByMonth(user);
+ 		}
+	}
+	
+	@RequestMapping(value = "/day", method = RequestMethod.GET)
+	@ResponseBody
+	public List<DayStatisticDto> getStatisticByDay(HttpServletRequest request, HttpServletResponse response) {
+		String token = request.getHeader("Authorization");
+		AppUser user = tokenService.validateToken(token);
+ 		if (user == null) {
+ 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+ 			return null;
+ 		} else {
+ 			response.setStatus(HttpStatus.OK.value());
+ 			return statisticService.getStatisticByDay(user);
  		}
 	}
 	
