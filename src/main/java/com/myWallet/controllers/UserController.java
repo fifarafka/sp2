@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.myWallet.model.AppUser;
 import com.myWallet.dto.AppUserDto;
+import com.myWallet.dto.ErrorResponseDto;
 import com.myWallet.dto.PasswordDto;
 import com.myWallet.dto.ReminderDto;
 import com.myWallet.dto.ReportDto;
@@ -49,19 +50,29 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-	public void changePassword(@RequestBody @Valid PasswordDto passwordDto, HttpServletRequest request, HttpServletResponse response) {
+	public ErrorResponseDto changePassword(@RequestBody @Valid PasswordDto passwordDto, HttpServletRequest request, HttpServletResponse response) {
 		String token = request.getHeader("Authorization");
 		AppUser user = tokenService.validateToken(token);
 		if (user == null) {
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+			return null;
 		
-		} else if (!passwordDto.getNewPassword().equals(passwordDto.getConfirmedPassword()) || 
-				!passwordDto.getOldPassword().equals(user.getPassword())) {
+		} else if (!passwordDto.getNewPassword().equals(passwordDto.getConfirmedPassword())) {
 		 	response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+			ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+			errorResponseDto.setResponse("Confirm password and New password fields doesn't match.");
+			return errorResponseDto;
+		
+		} else if (!passwordDto.getOldPassword().equals(user.getPassword())) {
+			response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+			ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+			errorResponseDto.setResponse("Provided current password is incorrect.");
+			return errorResponseDto;
 		
 		} else {
 			response.setStatus(HttpStatus.OK.value());
 			appUserService.changePassword(user, passwordDto.getNewPassword());
+			return null;
 		}
 	}
 	
