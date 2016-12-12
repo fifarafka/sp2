@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myWallet.dto.AppUserDto;
-import com.myWallet.dto.TokenDto;
+import com.myWallet.dto.LoginResponseDto;
+import com.myWallet.model.AppUser;
 import com.myWallet.services.LoginService;
+import com.myWallet.services.TokenService;
 
 
 @RequestMapping(value = "/api")
@@ -24,18 +26,23 @@ public class LoginController {
 	@Autowired
 	public LoginService loginService;
 	
+	@Autowired
+	public TokenService tokenService;
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes="application/json", produces= "application/json")
 	@ResponseBody
-	public TokenDto login(@RequestBody @Valid AppUserDto loginDto, HttpServletResponse response) {
+	public LoginResponseDto login(@RequestBody @Valid AppUserDto loginDto, HttpServletResponse response) {
 		String token = loginService.login(loginDto);
 		if (token == null) {
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
 			return null;
 		} else {
 			response.setStatus(HttpStatus.OK.value());
-			TokenDto tokenDto = new TokenDto();
-			tokenDto.setToken(token);
-			return tokenDto;
+			LoginResponseDto loginResponseDto = new LoginResponseDto();
+			loginResponseDto.setToken(token);
+			AppUser user = tokenService.validateToken(token);
+			loginResponseDto.setReportValue(user.isReport());
+			return loginResponseDto;
 		}
 	}
 	
