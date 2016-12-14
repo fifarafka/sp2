@@ -28,6 +28,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public void addExpense(ExpenseDto expenseDto, AppUser appUser) {
 		Expense expense = new Expense();
+		appUser.setMonthExpenses(appUser.getMonthExpenses().add(expenseDto.getValue()));
 		expense.setAppUser(appUser);
 		expense.setCategory(categoryRepository.findOneByAppUserAndCategoryName(appUser, expenseDto.getCategory().getCategoryName()));
 		expenseRepository.save(expenseTransformer.transformFromDto(expense, expenseDto));

@@ -1,5 +1,6 @@
 package com.myWallet.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,9 @@ public class AppUser extends AbstractEntity {
 
 	private boolean report;
 	
-	private Integer reminder;
+	private Integer reminder = new Integer("0");
+	
+	private BigDecimal monthExpenses = BigDecimal.ZERO;
 
 	@OneToMany
 	private List<Category> categories = new ArrayList<>();
@@ -65,5 +68,13 @@ public class AppUser extends AbstractEntity {
 
 	public void setReminder(Integer reminder) {
 		this.reminder = reminder;
+	}
+
+	public BigDecimal getMonthExpenses() {
+		return monthExpenses;
+	}
+
+	public void setMonthExpenses(BigDecimal monthExpenses) {
+		this.monthExpenses = monthExpenses;
 	}
 }

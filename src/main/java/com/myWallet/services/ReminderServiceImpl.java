@@ -24,7 +24,7 @@ import com.myWallet.repositories.AppUserRepository;
 public class ReminderServiceImpl implements ReminderService {
 	
 	private static String USER_NAME = "hajsApplication";
-    private static String PASSWORD = "";
+    private static String PASSWORD = "dupajasia";
     
     @Autowired
     private AppUserRepository appUserRepository;
@@ -70,16 +70,16 @@ public class ReminderServiceImpl implements ReminderService {
     }
 
 	@Override
-	public void sendReport(AppUser user) {
+	public void sendReport() {
 		List<String> to = new ArrayList<>();
-		int day = LocalDate.now().getDayOfMonth();
-		/*List<Reminder> reminders = (List<Reminder>) reminderRepository.findAll();
-		for (Reminder reminder : reminders) {
-			int reminderDay = reminder.getReminderDay();
-			if (reminderDay == day) {
-				to.add(reminder.getAppUser().getLogin());
+		Integer day =LocalDate.now().getDayOfMonth();
+		List<AppUser> users = (List<AppUser>) appUserRepository.findAll();
+		for (AppUser user : users) {
+			Integer reminderDay = user.getReminder();
+			if (reminderDay.equals(day)) {
+				to.add(user.getLogin());
 			}
-		}*/
+		}
 		sendFromGMail(to, "Przypominamy o płatnościach!", "Pamiętaj, aby dokonać wszystkich płatności w terminie oraz zanotować je w aplikacji Zarządzanie Hajsem. Miłego dnia, życzy Zespół HajsApplication");
 	}
 
@@ -101,8 +101,21 @@ public class ReminderServiceImpl implements ReminderService {
 
 	@Override
 	public void deleteReminder(AppUser user) {
-		// TODO Auto-generated method stub
-		
+		AppUser appUser = appUserRepository.findOneByLogin(user.getLogin());
+		appUser.setReminder(new Integer("0"));
+		appUserRepository.save(appUser);
 	}
+
+	@Override
+	public void sendReminder() {
+		List<String> to = new ArrayList<>();
+		List<AppUser> users = (List<AppUser>) appUserRepository.findAll();
+		for (AppUser user : users) {
+			if (user.isReport()) {
+				to.add(user.getLogin());
+			}
+		}
+		sendFromGMail(to, "Przypominamy o płatnościach!", "Pamiętaj, aby dokonać wszystkich płatności w terminie oraz zanotować je w aplikacji Zarządzanie Hajsem. Miłego dnia, życzy Zespół HajsApplication");
+		}
 
 }

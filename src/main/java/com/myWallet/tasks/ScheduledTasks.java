@@ -21,9 +21,15 @@ public class ScheduledTasks {
     @Autowired
     private ReminderService reminderService;
     
-    @Scheduled(cron = "0 0 8 * * *", zone = "Europe/Warsaw")
-    public void reportCurrentTime() {
+    /*    @Scheduled(cron = "0 0 8 * * *", zone = "Europe/Warsaw")
+    public void userReminders() {
         log.info(dateFormat.format(new Date())+ "Sending reminders to users.");
         reminderService.sendReport();
+    }*/
+    
+    @Scheduled(cron = "0 0 8 1 * *", zone = "Europe/Warsaw")
+    public void userReport() {
+        log.info(dateFormat.format(new Date())+ "Sending reminders to users.");
+        reminderService.sendReminder();
     }
 }

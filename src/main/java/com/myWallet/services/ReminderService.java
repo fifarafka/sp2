@@ -5,7 +5,9 @@ import com.myWallet.model.AppUser;
 
 public interface ReminderService {
 	
-	void sendReport(AppUser user);
+	void sendReminder();
+	
+	void sendReport();
 	
 	void addReminder(ReminderDto reminderDto, AppUser user);
 

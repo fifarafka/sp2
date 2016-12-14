@@ -77,6 +77,6 @@ public class StatisticController {
 	
 	@RequestMapping(value = "/mailTest", method = RequestMethod.GET)
 	public void sendEmail(HttpServletRequest request, HttpServletResponse response) {
-		reminderService.sendReport();
+		//reminderService.sendReport();
 	}
 }

@@ -112,7 +112,7 @@ public class UserController {
  			response.setStatus(HttpStatus.UNAUTHORIZED.value());
  		} else {
  			response.setStatus(HttpStatus.OK.value());
- 			reminderService.deleteReminder();
+ 			reminderService.deleteReminder(user);
  		}
 	}
 	
