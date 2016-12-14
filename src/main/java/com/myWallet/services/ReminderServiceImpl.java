@@ -18,9 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.myWallet.dto.ReminderDto;
 import com.myWallet.model.AppUser;
-import com.myWallet.model.Reminder;
-import com.myWallet.repositories.ReminderRepository;
-import com.myWallet.transformers.ReminderTransformer;
+import com.myWallet.repositories.AppUserRepository;
 
 @Service
 public class ReminderServiceImpl implements ReminderService {
@@ -29,10 +27,7 @@ public class ReminderServiceImpl implements ReminderService {
     private static String PASSWORD = "";
     
     @Autowired
-    private ReminderRepository reminderRepository;
-    
-    @Autowired
-    private ReminderTransformer reminderTransformer;
+    private AppUserRepository appUserRepository;
 
     private static void sendFromGMail(List<String> to, String subject, String body) {
         Properties props = System.getProperties();
@@ -75,24 +70,39 @@ public class ReminderServiceImpl implements ReminderService {
     }
 
 	@Override
-	public void sendReport() {
+	public void sendReport(AppUser user) {
 		List<String> to = new ArrayList<>();
 		int day = LocalDate.now().getDayOfMonth();
-		List<Reminder> reminders = (List<Reminder>) reminderRepository.findAll();
+		/*List<Reminder> reminders = (List<Reminder>) reminderRepository.findAll();
 		for (Reminder reminder : reminders) {
 			int reminderDay = reminder.getReminderDay();
 			if (reminderDay == day) {
 				to.add(reminder.getAppUser().getLogin());
 			}
-		}
+		}*/
 		sendFromGMail(to, "Przypominamy o płatnościach!", "Pamiętaj, aby dokonać wszystkich płatności w terminie oraz zanotować je w aplikacji Zarządzanie Hajsem. Miłego dnia, życzy Zespół HajsApplication");
 	}
 
 	@Override
 	public void addReminder(ReminderDto reminderDto, AppUser user) {
-		Reminder reminder = new Reminder();
-		reminder.setAppUser(user);
-		reminderRepository.save(reminderTransformer.transformFromDto(reminder, reminderDto));
+		AppUser appUser = appUserRepository.findOneByLogin(user.getLogin());
+		appUser.setReminder(reminderDto.getReminderDay());
+		appUserRepository.save(appUser);
+		
+	}
+
+	@Override
+	public ReminderDto getReminderDay(AppUser user) {
+		AppUser appUser = appUserRepository.findOneByLogin(user.getLogin());
+		ReminderDto dto = new ReminderDto();
+		dto.setReminderDay(appUser.getReminder());
+		return dto;
+	}
+
+	@Override
+	public void deleteReminder(AppUser user) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

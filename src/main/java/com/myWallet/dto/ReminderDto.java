@@ -2,13 +2,13 @@ package com.myWallet.dto;
 
 public class ReminderDto extends AbstractDto {
 	
-	private int reminderDay;
+	private Integer reminderDay;
 
-	public int getReminderDay() {
+	public Integer getReminderDay() {
 		return reminderDay;
 	}
 
-	public void setReminderDay(int reminderDay) {
+	public void setReminderDay(Integer reminderDay) {
 		this.reminderDay = reminderDay;
 	}
 

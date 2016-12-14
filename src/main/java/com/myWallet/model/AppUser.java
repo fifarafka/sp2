@@ -19,8 +19,7 @@ public class AppUser extends AbstractEntity {
 
 	private boolean report;
 	
-	@OneToMany
-	private List<Reminder> reminders = new ArrayList<>();
+	private Integer reminder;
 
 	@OneToMany
 	private List<Category> categories = new ArrayList<>();
@@ -58,5 +57,13 @@ public class AppUser extends AbstractEntity {
 
 	public void setReport(boolean report) {
 		this.report = report;
+	}
+
+	public Integer getReminder() {
+		return reminder;
+	}
+
+	public void setReminder(Integer reminder) {
+		this.reminder = reminder;
 	}
 }

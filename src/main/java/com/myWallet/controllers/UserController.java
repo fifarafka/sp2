@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myWallet.model.AppUser;
 import com.myWallet.dto.AppUserDto;
 import com.myWallet.dto.ErrorResponseDto;
 import com.myWallet.dto.PasswordDto;
 import com.myWallet.dto.ReminderDto;
 import com.myWallet.dto.ReportDto;
+import com.myWallet.model.AppUser;
+import com.myWallet.services.AppUserService;
 import com.myWallet.services.ReminderService;
 import com.myWallet.services.TokenService;
-import com.myWallet.services.AppUserService;
 
 @RequestMapping(value = "/api/user")
 @RestController
@@ -86,6 +86,33 @@ public class UserController {
  		} else {
  			response.setStatus(HttpStatus.CREATED.value());
  			reminderService.addReminder(reminderDto, user);
+ 		}
+	}
+	
+	@RequestMapping(value = "/reminder", method = RequestMethod.GET)
+	@ResponseBody
+	public ReminderDto getReminderDay(HttpServletResponse response, HttpServletRequest request) {
+		String token = request.getHeader("Authorization");
+		AppUser user = tokenService.validateToken(token);
+ 		if (user == null) {
+ 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+ 			return null;
+ 		} else {
+ 			response.setStatus(HttpStatus.OK.value());
+ 			return reminderService.getReminderDay(user);
+ 		}
+	}
+	
+	@RequestMapping(value = "/reminder", method = RequestMethod.DELETE)
+	@ResponseBody
+	public void deleteReminder(HttpServletResponse response, HttpServletRequest request) {
+		String token = request.getHeader("Authorization");
+		AppUser user = tokenService.validateToken(token);
+ 		if (user == null) {
+ 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+ 		} else {
+ 			response.setStatus(HttpStatus.OK.value());
+ 			reminderService.deleteReminder();
  		}
 	}
 	
